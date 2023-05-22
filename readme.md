@@ -9,6 +9,8 @@
 
 This package adds a page to the Filament Admin panel to view the activity log.
 
+![Screenshot](./.github/resources/screenshot.png)
+
 ## Installation
 
 Install via Composer.
@@ -23,18 +25,18 @@ composer require pxlrbt/filament-activity-log
 
 ### Create a page
 
-Create the page inside your resources `Pages/` directory. Replace `ProductResource` with your resource. 
+Create the page inside your resources `Pages/` directory. Replace `UserResource` with your resource. 
 
 ```php
 <?php
 
-namespace App\Filament\Resources\ProductResource\Pages;
+namespace App\Filament\Resources\UserResource\Pages;
 
 use pxlrbt\FilamentActivityLog\Pages\ListActivities;
 
-class ListProductActivites extends ListActivities
+class ListUserActivites extends ListActivities
 {
-    protected static string $resource = ProductResource::class;
+    protected static string $resource = UserResource::class;
 }
 ```
 
@@ -46,10 +48,10 @@ Add the page to your resource's `getPages()` method.
 public static function getPages(): array
 {
     return [
-        'index' => Pages\ListSpecifications::route('/'),
-        'create' => Pages\CreateSpecification::route('/create'),
-        'activities' => Pages\ListSpecificationActivites::route('/{record}/activities'),
-        'edit' => Pages\EditSpecification::route('/{record}/edit'),
+        'index' => Pages\ListUsers::route('/'),
+        'create' => Pages\CreateUser::route('/create'),
+        'activities' => Pages\ListUserActivites::route('/{record}/activities'),
+        'edit' => Pages\EditUser::route('/{record}/edit'),
     ];
 }
 ```
