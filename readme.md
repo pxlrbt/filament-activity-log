@@ -23,6 +23,9 @@ composer require pxlrbt/filament-activity-log
 
 ## Usage
 
+
+Make sure you use a **custom theme** and the vendor folder for this plugins is published, so that it includes the Tailwind CSS classes.
+
 ### Create a page
 
 Create the page inside your resources `Pages/` directory. Replace `UserResource` with your resource. 
