@@ -77,7 +77,7 @@ abstract class ListActivities extends Page
         return $extracted
             ->filter(fn ($field) => $field instanceof Field)
             ->mapWithKeys(fn (Field $field) => [
-                $field->getName() => $field->getLabel()
+                $field->getName() => $field->getLabel(),
             ]);
     }
 
