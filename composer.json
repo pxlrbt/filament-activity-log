@@ -34,6 +34,6 @@
         "laravel/pint": "^1.5"
     },
     "scripts": {
-        "pint": "./vendor/bin/pint"
+        "pint": "vendor/bin/pint"
     }
 }
