@@ -34,10 +34,6 @@
         "laravel/pint": "^1.5"
     },
     "scripts": {
-        "pint": "./vendor/bin/pint",
-        "style": [
-            "@pint",
-            "@phpstan"
-        ]
+        "pint": "./vendor/bin/pint"
     }
 }

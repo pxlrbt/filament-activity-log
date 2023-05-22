@@ -4,7 +4,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pxlrbt/filament-activity-log.svg?include_prereleases)](https://packagist.org/packages/pxlrbt/filament-activity-log)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pxlrbt/filament-activity-log/code-style.yml?branch=main)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pxlrbt/filament-activity-log/code-style.yml?branch=main&label=Code%20style&style=flat-square)
 [![Total Downloads](https://img.shields.io/packagist/dt/pxlrbt/filament-activity-log.svg)](https://packagist.org/packages/pxlrbt/filament-activity-log)
 
 This package adds a page to the Filament Admin panel to view the activity log.
