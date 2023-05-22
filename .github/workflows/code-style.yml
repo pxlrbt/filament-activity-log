@@ -9,6 +9,8 @@ jobs:
   php-cs-fixer:
     name: Run Laravel pint
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Setup PHP with tools
