@@ -38,7 +38,7 @@
                             /* @var \Spatie\Activitylog\Models\Activity $activityItem */
                             $changes = $activityItem->getChangesAttribute();
                         @endphp
-                        @foreach(data_get($changes, 'attributes') as $field => $change)
+                        @foreach(data_get($changes, 'attributes', []) as $field => $change)
                             <x-tables::row @class(['bg-gray-100/30' => $loop->even])>
                                 <x-tables::cell width="20%" class="px-4 py-2 align-top">
                                     {{ $this->getFieldLabel($field) }}
