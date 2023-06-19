@@ -2,9 +2,8 @@
 
 namespace pxlrbt\FilamentActivityLog\Pages;
 
-use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\MorphToSelect;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\Concerns\HasRecordBreadcrumb;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
@@ -54,16 +53,12 @@ abstract class ListActivities extends Page
         $extracted = collect();
 
         while (($component = $components->shift()) !== null) {
-            $children = $component->getChildComponents();
-
-            if (
-                $component instanceof Repeater
-                || $component instanceof Builder
-            ) {
+            if ($component instanceof Field || $component instanceof MorphToSelect) {
                 $extracted->push($component);
-
                 continue;
             }
+
+            $children = $component->getChildComponents();
 
             if (count($children) > 0) {
                 $components = $components->merge($children);
