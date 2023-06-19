@@ -55,6 +55,7 @@ abstract class ListActivities extends Page
         while (($component = $components->shift()) !== null) {
             if ($component instanceof Field || $component instanceof MorphToSelect) {
                 $extracted->push($component);
+
                 continue;
             }
 
