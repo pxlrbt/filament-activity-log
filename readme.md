@@ -22,7 +22,7 @@ composer require pxlrbt/filament-activity-log
 ```
 
 > **Note**
-> This plugin only offers a page to show activities related to your model. You need [`spatie/laravel-activitylog`](https://github.com/spatie/laravel-activitylog) installed and configured for it to work. It is importing you are using the LogsActivity trait as per: https://spatie.be/docs/laravel-activitylog/v4/advanced-usage/logging-model-events for this work work as we use the 'activities' function of the trait.
+> This plugin only offers a page to show activities related to your model. You need [`spatie/laravel-activitylog`](https://github.com/spatie/laravel-activitylog) installed and configured for it to work. It is important you are using the LogsActivity trait as per: https://spatie.be/docs/laravel-activitylog/v4/advanced-usage/logging-model-events for this work work as we use the 'activities' function of the trait.
 
 ## Usage
 
