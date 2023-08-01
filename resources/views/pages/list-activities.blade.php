@@ -39,15 +39,27 @@
                             $changes = $activityItem->getChangesAttribute();
                         @endphp
                         @foreach(data_get($changes, 'attributes', []) as $field => $change)
+                            @php
+                                $oldValue = data_get($changes, "old.{$field}");
+                                $newValue = data_get($changes, "attributes.{$field}");
+                            @endphp
                             <x-tables::row @class(['bg-gray-100/30' => $loop->even])>
                                 <x-tables::cell width="20%" class="px-4 py-2 align-top">
                                     {{ $this->getFieldLabel($field) }}
                                 </x-tables::cell>
                                 <x-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
-                                    {{ data_get($changes, "old.{$field}") }}
+                                    @if(is_array($oldValue))
+                                        <pre class="text-xs text-gray-500">{{ json_encode($oldValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+                                    @else
+                                        {{ $oldValue }}
+                                    @endif
                                 </x-tables::cell>
                                 <x-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
-                                    {{ data_get($changes, "attributes.{$field}") }}
+                                    @if(is_array($newValue))
+                                        <pre class="text-xs text-gray-500">{{ json_encode($newValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+                                    @else
+                                        {{ $newValue }}
+                                    @endif
                                 </x-tables::cell>
                             </x-tables::row>
                         @endforeach
