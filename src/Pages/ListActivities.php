@@ -4,18 +4,20 @@ namespace pxlrbt\FilamentActivityLog\Pages;
 
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\MorphToSelect;
-use Filament\Resources\Form;
-use Filament\Resources\Pages\Concerns\HasRecordBreadcrumb;
+use Filament\Forms\Form;
+use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Concerns\CanPaginateRecords;
 use Illuminate\Support\Collection;
+use Livewire\Features\SupportPagination\HandlesPagination;
 
-abstract class ListActivities extends Page
+abstract class ListActivities extends Page implements HasForms
 {
-    use InteractsWithRecord;
     use CanPaginateRecords;
+    use HandlesPagination;
     use HasRecordBreadcrumb;
+    use InteractsWithRecord;
 
     protected static string $view = 'filament-activity-log::pages.list-activities';
 
@@ -47,7 +49,7 @@ abstract class ListActivities extends Page
 
     protected function createFieldLabelMap(): Collection
     {
-        $form = static::getResource()::form(new Form());
+        $form = static::getResource()::form(new Form($this));
 
         $components = collect($form->getSchema());
         $extracted = collect();
