@@ -1,4 +1,4 @@
-<x-filament::page>
+<x-filament-panels::page>
     <div class="space-y-6">
         @foreach($this->getActivities() as $activityItem)
             <div @class([
@@ -9,7 +9,7 @@
                     <div class="flex justify-between">
                         <div class="flex gap-4 items-center">
                             @if ($activityItem->causer)
-                                <x-filament::user-avatar :user="$activityItem->causer" class="!w-7 !h-7" />
+                                <x-filament-panels::avatar.user :user="$activityItem->causer" class="!w-7 !h-7"/>
                                 <span class="font-bold">{{ $activityItem->causer?->name }}</span>
                             @endif
                         </div>
@@ -20,19 +20,19 @@
                     </div>
                 </div>
 
-                <x-filament::hr />
+                <hr />
 
-                <x-tables::table class="w-full overflow-hidden text-sm">
+                <x-filament-tables::table class="w-full overflow-hidden text-sm">
                     <x-slot:header>
-                        <x-tables::header-cell>
+                        <x-filament-tables::header-cell>
                             @lang('filament-activity-log::activities.table.field')
-                        </x-tables::header-cell>
-                        <x-tables::header-cell>
+                        </x-filament-tables::header-cell>
+                        <x-filament-tables::header-cell>
                             @lang('filament-activity-log::activities.table.old')
-                        </x-tables::header-cell>
-                        <x-tables::header-cell>
+                        </x-filament-tables::header-cell>
+                        <x-filament-tables::header-cell>
                             @lang('filament-activity-log::activities.table.new')
-                        </x-tables::header-cell>
+                        </x-filament-tables::header-cell>
                     </x-slot:header>
                         @php
                             /* @var \Spatie\Activitylog\Models\Activity $activityItem */
@@ -43,33 +43,34 @@
                                 $oldValue = data_get($changes, "old.{$field}");
                                 $newValue = data_get($changes, "attributes.{$field}");
                             @endphp
-                            <x-tables::row @class(['bg-gray-100/30' => $loop->even])>
-                                <x-tables::cell width="20%" class="px-4 py-2 align-top">
+                            <x-filament-tables::row @class(['bg-gray-100/30' => $loop->even])>
+                                <x-filament-tables::cell width="20%" class="px-4 py-2 align-top">
                                     {{ $this->getFieldLabel($field) }}
-                                </x-tables::cell>
-                                <x-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
+                                </x-filament-tables::cell>
+                                <x-filament-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
                                     @if(is_array($oldValue))
                                         <pre class="text-xs text-gray-500">{{ json_encode($oldValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
                                     @else
                                         {{ $oldValue }}
                                     @endif
-                                </x-tables::cell>
-                                <x-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
+                                </x-filament-tables::cell>
+                                <x-filament-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
                                     @if(is_array($newValue))
                                         <pre class="text-xs text-gray-500">{{ json_encode($newValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
                                     @else
                                         {{ $newValue }}
                                     @endif
-                                </x-tables::cell>
-                            </x-tables::row>
+                                </x-filament-tables::cell>
+                            </x-filament-tables::row>
                         @endforeach
-                </x-tables::table>
+                </x-filament-tables::table>
             </div>
         @endforeach
 
-        <x-tables::pagination
-            :paginator="$this->getActivities()"
-            :records-per-page-select-options="$this->getTableRecordsPerPageSelectOptions()"
-        />
+            <x-filament::pagination
+                    :page-options="$this->getTableRecordsPerPageSelectOptions()"
+                    :paginator="$this->getActivities()"
+                    class="px-3 py-3 sm:px-6"
+            />
     </div>
-</x-filament::page>
+</x-filament-panels::page>
