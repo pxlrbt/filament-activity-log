@@ -11,13 +11,14 @@ use Filament\Resources\Pages\Page;
 use Filament\Tables\Concerns\CanPaginateRecords;
 use Illuminate\Support\Collection;
 use Livewire\Features\SupportPagination\HandlesPagination;
+use Filament\Forms\Contracts\HasForms;
 
 abstract class ListActivities extends Page implements HasForms
 {
     use CanPaginateRecords;
     use HandlesPagination;
-    use HasRecordBreadcrumb;
     use InteractsWithRecord;
+    use InteractsWithFormActions;
 
     protected static string $view = 'filament-activity-log::pages.list-activities';
 
@@ -51,7 +52,7 @@ abstract class ListActivities extends Page implements HasForms
     {
         $form = static::getResource()::form(new Form($this));
 
-        $components = collect($form->getSchema());
+        $components = collect($form->getComponents());
         $extracted = collect();
 
         while (($component = $components->shift()) !== null) {
