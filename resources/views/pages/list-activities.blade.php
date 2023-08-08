@@ -19,13 +19,13 @@
                         <div class="flex flex-col text-xs text-gray-500 justify-end">
                             @if(static::getResource()::canRestore($record))
                             <x-filament::button
-                                    name="revert"
+                                    name="restore"
                                     color="gray"
                                     icon="heroicon-o-arrow-path-rounded-square"
                                     labeled-from="sm"
                                     tag="button"
-                                    type="submit" wire:click="revertActivity({{ $activityItem->id }})" class="right">
-                                @lang('filament-activity-log::activities.table.revert')
+                                    type="submit" wire:click="restoreActivity({{ $activityItem->id }})" class="right">
+                                @lang('filament-activity-log::activities.table.restore')
                             </x-filament::button>
                             @endif
                         </div>
