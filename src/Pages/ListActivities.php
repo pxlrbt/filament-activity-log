@@ -13,6 +13,7 @@ use Filament\Tables\Concerns\CanPaginateRecords;
 use Illuminate\Support\Collection;
 use Livewire\Features\SupportPagination\HandlesPagination;
 use Filament\Forms\Contracts\HasForms;
+use Exception;
 
 abstract class ListActivities extends Page implements HasForms
 {
@@ -80,35 +81,41 @@ abstract class ListActivities extends Page implements HasForms
                 $field->getName() => $field->getLabel(),
             ]);
     }
-    public function restoreActivity($id = null) {
 
-        if($id && static::getResource()::canRestore($this->record)) {
-
-            $activity = $this->record->activities()->where('id', $id)->first();
-            $properties = $activity->properties ?? null;
-            if($properties && $properties['old']) {
-
-                try {
-
-                    $this->record->update(
-                        $properties['old']
-                    );
-
-                    Notification::make()
-                        ->title(__('filament-activity-log::activities.events.restore_successful'))
-                        ->success()
-                        ->send();
-                } catch (\Exception $e) {
-
-                    Notification::make()
-                        ->title(__('filament-activity-log::activities.events.restore_failed'))
-                        ->body($e->getMessage())
-                        ->danger()
-                        ->send();
-                }
-            }
-        } else {
+    public function restoreActivity(int|string $key)
+    {
+        if (! static::getResource()::canRestore($this->record)) {
             abort(403);
+        }
+
+        $activity = $this->record->activities()
+            ->whereKey($key)
+            ->first();
+
+        $oldProperties = data_get($activity, 'properties.old');
+
+        if ($oldProperties === null) {
+            Notification::make()
+                ->title(__('filament-activity-log::activities.events.restore_failed'))
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        try {
+            $this->record->update($oldProperties);
+
+            Notification::make()
+                ->title(__('filament-activity-log::activities.events.restore_successful'))
+                ->success()
+                ->send();
+        } catch (Exception $e) {
+            Notification::make()
+                ->title(__('filament-activity-log::activities.events.restore_failed'))
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
         }
     }
 
