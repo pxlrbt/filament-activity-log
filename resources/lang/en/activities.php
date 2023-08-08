@@ -9,6 +9,7 @@ return [
         'field' => 'Field',
         'old' => 'Old',
         'new' => 'New',
+        'restore' => 'Restore'
     ],
 
     'events' => [
@@ -16,5 +17,7 @@ return [
         'created' => 'Created',
         'deleted' => 'Deleted',
         'restored' => 'Restored',
+        'restore_successful' => 'Restored successfully',
+        'restore_failed' => 'Restore failed',
     ],
 ];

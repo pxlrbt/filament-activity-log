@@ -5,6 +5,7 @@ namespace pxlrbt\FilamentActivityLog\Pages;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
@@ -12,6 +13,7 @@ use Filament\Tables\Concerns\CanPaginateRecords;
 use Illuminate\Support\Collection;
 use Livewire\Features\SupportPagination\HandlesPagination;
 use Filament\Forms\Contracts\HasForms;
+use Exception;
 
 abstract class ListActivities extends Page implements HasForms
 {
@@ -78,6 +80,43 @@ abstract class ListActivities extends Page implements HasForms
             ->mapWithKeys(fn (Field $field) => [
                 $field->getName() => $field->getLabel(),
             ]);
+    }
+
+    public function restoreActivity(int|string $key)
+    {
+        if (! static::getResource()::canRestore($this->record)) {
+            abort(403);
+        }
+
+        $activity = $this->record->activities()
+            ->whereKey($key)
+            ->first();
+
+        $oldProperties = data_get($activity, 'properties.old');
+
+        if ($oldProperties === null) {
+            Notification::make()
+                ->title(__('filament-activity-log::activities.events.restore_failed'))
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        try {
+            $this->record->update($oldProperties);
+
+            Notification::make()
+                ->title(__('filament-activity-log::activities.events.restore_successful'))
+                ->success()
+                ->send();
+        } catch (Exception $e) {
+            Notification::make()
+                ->title(__('filament-activity-log::activities.events.restore_failed'))
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
     }
 
     protected function getIdentifiedTableQueryStringPropertyNameFor(string $property): string
