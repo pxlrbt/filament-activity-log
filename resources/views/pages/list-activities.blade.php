@@ -13,23 +13,25 @@
                             @endif
                             <div class="flex flex-col text-left">
                                 <span class="font-bold">{{ $activityItem->causer?->name }}</span>
-                                <span class="text-xs text-gray-500">@lang('filament-activity-log::activities.events.' . $activityItem->event) {{ $activityItem->created_at->format(__('filament-activity-log::activities.default_datetime_format')) }}</span>
+                                <span class="text-xs text-gray-500">
+                                    @lang('filament-activity-log::activities.events.' . $activityItem->event) {{ $activityItem->created_at->format(__('filament-activity-log::activities.default_datetime_format')) }}
+                                </span>
                             </div>
                         </div>
                         <div class="flex flex-col text-xs text-gray-500 justify-end">
-                            @if(static::getResource()::canRestore($record))
-                            <x-filament::button
-                                    name="restore"
-                                    color="gray"
+                            @if (static::getResource()::canRestore($record))
+                                <x-filament::button
+                                    tag="button"
                                     icon="heroicon-o-arrow-path-rounded-square"
                                     labeled-from="sm"
-                                    tag="button"
-                                    type="submit" wire:click="restoreActivity({{ $activityItem->id }})" class="right">
-                                @lang('filament-activity-log::activities.table.restore')
-                            </x-filament::button>
+                                    color="gray"
+                                    class="right"
+                                    wire:click="restoreActivity({{ $activityItem->getKey() }})"
+                                >
+                                    @lang('filament-activity-log::activities.table.restore')
+                                </x-filament::button>
                             @endif
                         </div>
-
                     </div>
                 </div>
 
@@ -77,10 +79,11 @@
                 </x-filament-tables::table>
             </div>
         @endforeach
-            <x-filament::pagination
-                    :page-options="$this->getTableRecordsPerPageSelectOptions()"
-                    :paginator="$this->getActivities()"
-                    class="px-3 py-3 sm:px-6"
-            />
+
+        <x-filament::pagination
+            :page-options="$this->getTableRecordsPerPageSelectOptions()"
+            :paginator="$this->getActivities()"
+            class="px-3 py-3 sm:px-6"
+        />
     </div>
 </x-filament-panels::page>
