@@ -25,7 +25,7 @@ This package adds a page to the Filament Admin panel to view the activity log ge
 | Plugin Version | Filament Version | PHP Version |
 |----------------|-----------------|-------------|
 | 0.1.x            | 2.x   | \> 8.0      |
-| 0.2.x            | 3.x             | \> 8.1      |
+| 1.x            | 3.x             | \> 8.1      |
 
 Install via Composer.
 
