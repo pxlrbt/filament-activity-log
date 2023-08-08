@@ -55,7 +55,7 @@
                                 $newValue = data_get($changes, "attributes.{$field}");
                             @endphp
                             <x-filament-tables::row @class(['bg-gray-100/30' => $loop->even])>
-                                <x-filament-tables::cell width="20%" class="px-4 py-2 align-top">
+                                <x-filament-tables::cell width="20%" class="px-4 py-2 align-top sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                     {{ $this->getFieldLabel($field) }}
                                 </x-filament-tables::cell>
                                 <x-filament-tables::cell width="40%" class="px-4 py-2 align-top break-all !whitespace-normal">
