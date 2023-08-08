@@ -5,6 +5,7 @@ namespace pxlrbt\FilamentActivityLog\Pages;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
@@ -78,6 +79,37 @@ abstract class ListActivities extends Page implements HasForms
             ->mapWithKeys(fn (Field $field) => [
                 $field->getName() => $field->getLabel(),
             ]);
+    }
+    public function restoreActivity($id = null) {
+
+        if($id && static::getResource()::canRestore($this->record)) {
+
+            $activity = $this->record->activities()->where('id', $id)->first();
+            $properties = $activity->properties ?? null;
+            if($properties && $properties['old']) {
+
+                try {
+
+                    $this->record->update(
+                        $properties['old']
+                    );
+
+                    Notification::make()
+                        ->title(__('filament-activity-log::activities.events.restore_successful'))
+                        ->success()
+                        ->send();
+                } catch (\Exception $e) {
+
+                    Notification::make()
+                        ->title(__('filament-activity-log::activities.events.restore_failed'))
+                        ->body($e->getMessage())
+                        ->danger()
+                        ->send();
+                }
+            }
+        } else {
+            abort(403);
+        }
     }
 
     protected function getIdentifiedTableQueryStringPropertyNameFor(string $property): string
