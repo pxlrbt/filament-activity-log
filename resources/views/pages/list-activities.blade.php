@@ -3,7 +3,7 @@
         @foreach($this->getActivities() as $activityItem)
             <div @class([
                 'p-2 space-y-2 bg-white rounded-xl shadow',
-                'dark:border-gray-600 dark:bg-gray-800' => config('filament.dark_mode'),
+                'dark:border-gray-600 dark:bg-gray-800',
             ])>
                 <div class="p-2">
                     <div class="flex justify-between">
