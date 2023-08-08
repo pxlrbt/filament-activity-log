@@ -9,6 +9,7 @@ return [
         'field' => 'الحقل',
         'old' => 'سابقاً',
         'new' => 'حالياً',
+        'restore' => 'أسترجاع'
     ],
 
     'events' => [
@@ -16,5 +17,7 @@ return [
         'created' => 'إنشاء',
         'deleted' => 'حذف',
         'restored' => 'استعادة',
+        'restore_successful' => 'تم الاسترجاع بنجاح',
+        'restore_failed' => 'فشل الاستراجع',
     ],
 ];
