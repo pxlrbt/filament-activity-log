@@ -9,6 +9,7 @@ return [
         'field' => 'Feld',
         'old' => 'Alt',
         'new' => 'Neu',
+        'restore' => 'Wiederherstellen'
     ],
 
     'events' => [
@@ -16,5 +17,7 @@ return [
         'created' => 'Erstellt',
         'deleted' => 'Gelöscht',
         'restored' => 'Wiederhergestellt',
+        'restore_successful' => 'Erfolgreich wiederhergestellt',
+        'restore_failed' => 'Wiederherstellung fehlgeschlagen',
     ],
 ];
