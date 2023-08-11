@@ -75,6 +75,16 @@ public static function getPages(): array
 }
 ```
 
+### Link to your page
+
+Use a Filament action to link to your from your table or page.
+
+```php
+$table->actions([
+    Action::make('activities')->url(YourResource::getUrl('activities'))
+]);
+```
+
 ## Contributing
 
 If you want to contribute to this packages, you may want to test it in a real Filament project:
