@@ -2,8 +2,10 @@
 
 namespace pxlrbt\FilamentActivityLog\Pages;
 
+use Exception;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\MorphToSelect;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
@@ -12,8 +14,6 @@ use Filament\Resources\Pages\Page;
 use Filament\Tables\Concerns\CanPaginateRecords;
 use Illuminate\Support\Collection;
 use Livewire\Features\SupportPagination\HandlesPagination;
-use Filament\Forms\Contracts\HasForms;
-use Exception;
 
 abstract class ListActivities extends Page implements HasForms
 {

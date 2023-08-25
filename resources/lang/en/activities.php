@@ -9,7 +9,7 @@ return [
         'field' => 'Field',
         'old' => 'Old',
         'new' => 'New',
-        'restore' => 'Restore'
+        'restore' => 'Restore',
     ],
 
     'events' => [
