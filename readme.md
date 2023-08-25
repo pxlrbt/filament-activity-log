@@ -81,7 +81,7 @@ Use a Filament action to link to your from your table or page.
 
 ```php
 $table->actions([
-    Action::make('activities')->url(fn ($record) => YourResource::getUrl('activities', [$record => $record]))
+    Action::make('activities')->url(fn ($record) => YourResource::getUrl('activities', ['record' => $record]))
 ]);
 ```
 
