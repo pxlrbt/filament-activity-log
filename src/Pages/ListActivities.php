@@ -31,6 +31,11 @@ abstract class ListActivities extends Page implements HasForms
         $this->record = $this->resolveRecord($record);
     }
 
+    public function getBreadcrumb(): string
+    {
+        return static::$breadcrumb ?? __('filament-activity-log::activities.breadcrumb');
+    }
+
     public function getTitle(): string
     {
         return __('filament-activity-log::activities.title', ['record' => $this->getRecordTitle()]);

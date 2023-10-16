@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'breadcrumb' => 'History',
+
     'title' => 'History :record',
 
     'default_datetime_format' => 'Y-m-d, H:i:s',
