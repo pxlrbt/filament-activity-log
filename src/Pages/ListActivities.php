@@ -19,8 +19,8 @@ abstract class ListActivities extends Page implements HasForms
 {
     use CanPaginateRecords;
     use HandlesPagination;
-    use InteractsWithRecord;
     use InteractsWithFormActions;
+    use InteractsWithRecord;
 
     protected static string $view = 'filament-activity-log::pages.list-activities';
 
@@ -29,6 +29,11 @@ abstract class ListActivities extends Page implements HasForms
     public function mount($record)
     {
         $this->record = $this->resolveRecord($record);
+    }
+
+    public function getBreadcrumb(): string
+    {
+        return static::$breadcrumb ?? __('filament-activity-log::activities.breadcrumb');
     }
 
     public function getTitle(): string

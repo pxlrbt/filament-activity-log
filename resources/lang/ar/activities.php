@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'breadcrumb' => 'سجل عمليات',
+
     'title' => 'سجل عمليات :record',
 
     'default_datetime_format' => 'Y-m-d, H:i:s',
