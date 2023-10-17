@@ -26,7 +26,7 @@
                                     labeled-from="sm"
                                     color="gray"
                                     class="right"
-                                    wire:click="restoreActivity({{ $activityItem->getKey() }})"
+                                    wire:click="restoreActivity({{ Js::from($activityItem->getKey()) }})"
                                 >
                                     @lang('filament-activity-log::activities.table.restore')
                                 </x-filament::button>
