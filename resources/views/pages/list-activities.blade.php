@@ -1,3 +1,6 @@
+@php
+    use \Illuminate\Support\Js;
+@endphp
 <x-filament-panels::page>
     <div class="space-y-6">
         @foreach($this->getActivities() as $activityItem)
