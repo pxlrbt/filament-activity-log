@@ -53,7 +53,7 @@ namespace App\Filament\Resources\UserResource\Pages;
 
 use pxlrbt\FilamentActivityLog\Pages\ListActivities;
 
-class ListUserActivites extends ListActivities
+class ListUserActivities extends ListActivities
 {
     protected static string $resource = UserResource::class;
 }
@@ -69,7 +69,7 @@ public static function getPages(): array
     return [
         'index' => Pages\ListUsers::route('/'),
         'create' => Pages\CreateUser::route('/create'),
-        'activities' => Pages\ListUserActivites::route('/{record}/activities'),
+        'activities' => Pages\ListUserActivities::route('/{record}/activities'),
         'edit' => Pages\EditUser::route('/{record}/edit'),
     ];
 }
