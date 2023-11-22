@@ -44,7 +44,7 @@ abstract class ListActivities extends Page implements HasForms
     public function getActivities()
     {
         return $this->paginateTableQuery(
-            $this->record->activities()->latest()->getQuery()
+            $this->record->activities()->with('causer')->latest()->getQuery()
         );
     }
 
