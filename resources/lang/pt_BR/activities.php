@@ -5,7 +5,7 @@ return [
 
     'title' => 'Histórico :record',
 
-    'default_datetime_format' => 'd-m-Y, H:i:s',
+    'default_datetime_format' => 'd/m/Y H:i:s',
 
     'table' => [
         'field' => 'Campo',
