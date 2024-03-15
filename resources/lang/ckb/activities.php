@@ -7,13 +7,13 @@ return [
     'title' => 'نرخەکانی پێشووی :record',
 
     'default_datetime_format' => 'Y-m-d, H:i:s',
-    
+
     'table' => [
         'field' => 'خانە',
         'old' => 'کۆن',
         'new' => 'نوێ',
     ],
-    
+
     'events' => [
         'updated' => 'نوێکراوەتەوە',
         'Created' => 'دروستکراوە',
