@@ -87,9 +87,14 @@ abstract class ListActivities extends Page implements HasForms
             ]);
     }
 
+    public function canRestoreActivity(): bool
+    {
+        return static::getResource()::canRestore($this->record);
+    }
+
     public function restoreActivity(int|string $key)
     {
-        if (! static::getResource()::canRestore($this->record)) {
+        if (! $this->canRestoreActivity()) {
             abort(403);
         }
 

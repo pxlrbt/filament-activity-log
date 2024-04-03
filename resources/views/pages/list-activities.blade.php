@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col text-xs text-gray-500 justify-end">
-                            @if (static::getResource()::canRestore($record))
+                            @if ($this->canRestoreActivity())
                                 <x-filament::button
                                     tag="button"
                                     icon="heroicon-o-arrow-path-rounded-square"
