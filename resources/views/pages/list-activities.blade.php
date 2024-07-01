@@ -4,6 +4,13 @@
 <x-filament-panels::page>
     <div class="space-y-6">
         @foreach($this->getActivities() as $activityItem)
+
+            @php
+                /* @var \Spatie\Activitylog\Models\Activity $activityItem */
+                $changes = $activityItem->getChangesAttribute();
+                $changesCount = $changes->count();
+            @endphp
+        
             <div @class([
                 'p-2 space-y-2 bg-white rounded-xl shadow',
                 'dark:border-gray-600 dark:bg-gray-800',
@@ -22,7 +29,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col text-xs text-gray-500 justify-end">
-                            @if ($this->canRestoreActivity())
+                            @if ($this->canRestoreActivity() && $changesCount > 0)
                                 <x-filament::button
                                     tag="button"
                                     icon="heroicon-o-arrow-path-rounded-square"
@@ -38,6 +45,8 @@
                     </div>
                 </div>
 
+                @if($changesCount > 0))
+                                    
                 <x-filament-tables::table class="w-full overflow-hidden text-sm">
                     <x-slot:header>
                         <x-filament-tables::header-cell>
@@ -80,6 +89,7 @@
                             </x-filament-tables::row>
                         @endforeach
                 </x-filament-tables::table>
+                @endif
             </div>
         @endforeach
 
