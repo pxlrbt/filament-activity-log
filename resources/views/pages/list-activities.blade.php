@@ -8,7 +8,6 @@
             @php
                 /* @var \Spatie\Activitylog\Models\Activity $activityItem */
                 $changes = $activityItem->getChangesAttribute();
-                $changesCount = $changes->count();
             @endphp
 
             <div @class([
@@ -29,7 +28,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col text-xs text-gray-500 justify-end">
-                            @if ($this->canRestoreActivity() && $changesCount > 0)
+                            @if ($this->canRestoreActivity() && $changes->isNotEmpty())
                                 <x-filament::button
                                     tag="button"
                                     icon="heroicon-o-arrow-path-rounded-square"
@@ -37,7 +36,7 @@
                                     color="gray"
                                     class="right"
                                     wire:click="restoreActivity({{ Js::from($activityItem->getKey()) }})"
-                                >
+ q                               >
                                     @lang('filament-activity-log::activities.table.restore')
                                 </x-filament::button>
                             @endif
@@ -45,7 +44,7 @@
                     </div>
                 </div>
 
-                @if($changesCount > 0)
+                @if ($changes->isNotEmpty())
                     <x-filament-tables::table class="w-full overflow-hidden text-sm">
                         <x-slot:header>
                             <x-filament-tables::header-cell>
@@ -58,7 +57,7 @@
                                 @lang('filament-activity-log::activities.table.new')
                             </x-filament-tables::header-cell>
                         </x-slot:header>
-                            @foreach(data_get($changes, 'attributes', []) as $field => $change)
+                            @foreach (data_get($changes, 'attributes', []) as $field => $change)
                                 @php
                                     $oldValue = data_get($changes, "old.{$field}");
                                     $newValue = data_get($changes, "attributes.{$field}");
