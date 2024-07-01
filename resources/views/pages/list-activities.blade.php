@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                @if($changesCount > 0))
+                @if($changesCount > 0)
                                     
                 <x-filament-tables::table class="w-full overflow-hidden text-sm">
                     <x-slot:header>
