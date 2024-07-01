@@ -36,7 +36,7 @@
                                     color="gray"
                                     class="right"
                                     wire:click="restoreActivity({{ Js::from($activityItem->getKey()) }})"
- q                               >
+                                >
                                     @lang('filament-activity-log::activities.table.restore')
                                 </x-filament::button>
                             @endif
