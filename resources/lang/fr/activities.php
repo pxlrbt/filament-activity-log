@@ -5,7 +5,7 @@ return [
 
     'title' => 'Historique :record',
 
-    'default_datetime_format' => 'Y-m-d, H:i:s',
+    'default_datetime_format' => 'd/m/Y, H:i:s',
 
     'table' => [
         'field' => 'Champ',
