@@ -12,7 +12,10 @@ use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Concerns\CanPaginateRecords;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Url;
 use Livewire\Features\SupportPagination\HandlesPagination;
 
 abstract class ListActivities extends Page implements HasForms
@@ -26,17 +29,20 @@ abstract class ListActivities extends Page implements HasForms
 
     protected static Collection $fieldLabelMap;
 
-    public function mount($record)
+    #[Url]
+    public int $perPage = 10;
+
+    public function mount($record): void
     {
         $this->record = $this->resolveRecord($record);
     }
 
-    public function getBreadcrumb(): string
+    public function getBreadcrumb(): string|Htmlable
     {
         return static::$breadcrumb ?? __('filament-activity-log::activities.breadcrumb');
     }
 
-    public function getTitle(): string
+    public function getTitle(): string|Htmlable
     {
         return __('filament-activity-log::activities.title', ['record' => $this->getRecordTitle()]);
     }
@@ -44,47 +50,51 @@ abstract class ListActivities extends Page implements HasForms
     public function getActivities()
     {
         return $this->paginateTableQuery(
-            $this->record->activities()->with('causer')->latest()->getQuery()
+            $this->getActivitiesQuery()
         );
+    }
+
+    protected function getActivitiesQuery(): Builder
+    {
+        return $this->record->activities()
+            ->with(['causer' => fn($query) => $query->withTrashed()])
+            ->latest();
     }
 
     public function getFieldLabel(string $name): string
     {
         static::$fieldLabelMap ??= $this->createFieldLabelMap();
 
-        return static::$fieldLabelMap[$name] ?? $name;
+        return static::$fieldLabelMap->get($name, $name);
     }
 
     protected function createFieldLabelMap(): Collection
     {
-        $form = static::getResource()::form(new Form($this));
+        return $this->extractFormFields()
+            ->filter(fn ($field) => $field instanceof Field)
+            ->mapWithKeys(fn (Field $field) => [
+                $field->getName() => $field->getLabel() ?? $field->getName(),
+            ]);
+    }
 
+    protected function extractFormFields(): Collection
+    {
+        $form = static::getResource()::form(new Form($this));
         $components = collect($form->getComponents());
         $extracted = collect();
 
-        while (($component = $components->shift()) !== null) {
+        while ($component = $components->shift()) {
             if ($component instanceof Field || $component instanceof MorphToSelect) {
                 $extracted->push($component);
-
                 continue;
             }
 
-            $children = $component->getChildComponents();
-
-            if (count($children) > 0) {
-                $components = $components->merge($children);
-
-                continue;
+            if ($children = $component->getChildComponents()) {
+                $components->push(...$children);
             }
-
-            $extracted->push($component);
         }
 
-        return $extracted
-            ->filter(fn ($field) => $field instanceof Field)
-            ->mapWithKeys(fn (Field $field) => [
-                $field->getName() => $field->getLabel(),
-            ]);
+        return $extracted;
     }
 
     public function canRestoreActivity(): bool
@@ -92,27 +102,23 @@ abstract class ListActivities extends Page implements HasForms
         return static::getResource()::canRestore($this->record);
     }
 
-    public function restoreActivity(int|string $key)
+    public function restoreActivity(int|string $key): void
     {
-        if (! $this->canRestoreActivity()) {
-            abort(403);
-        }
+        abort_unless($this->canRestoreActivity(), 403);
 
         $activity = $this->record->activities()
             ->whereKey($key)
-            ->first();
+            ->firstOrFail();
 
-        $oldProperties = data_get($activity, 'properties.old');
+        $oldProperties = $activity->properties['old'] ?? null;
 
-        if ($oldProperties === null) {
+        if (!$oldProperties) {
             $this->sendRestoreFailureNotification();
-
             return;
         }
 
         try {
             $this->record->update($oldProperties);
-
             $this->sendRestoreSuccessNotification();
         } catch (Exception $e) {
             $this->sendRestoreFailureNotification($e->getMessage());
@@ -143,7 +149,7 @@ abstract class ListActivities extends Page implements HasForms
 
     protected function getDefaultTableRecordsPerPageSelectOption(): int
     {
-        return 10;
+        return $this->perPage;
     }
 
     protected function getTableRecordsPerPageSelectOptions(): array
