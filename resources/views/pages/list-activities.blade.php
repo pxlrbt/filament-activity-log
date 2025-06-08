@@ -74,7 +74,9 @@
                                         @endif
                                     </x-filament-tables::cell>
                                     <x-filament-tables::cell width="40%" class="px-4 py-2 align-top break-all whitespace-normal">
-                                        @if(is_array($newValue))
+                                        @if (is_bool($newValue))
+                                            <span class="text-xs text-gray-500">{{ $newValue ? 'true' : 'false' }}</span>
+                                        @elseif(is_array($newValue))
                                             <pre class="text-xs text-gray-500">{{ json_encode($newValue, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
                                         @else
                                             {{ $newValue }}
