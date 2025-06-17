@@ -23,9 +23,10 @@ This package adds a page to the Filament Admin panel to view the activity log ge
 ## Installation
 
 | Plugin Version | Filament Version | PHP Version |
-|----------------|-----------------|-------------|
-| 0.1.x            | 2.x   | \> 8.0      |
-| 1.x            | 3.x             | \> 8.1      |
+|----------------|------------------|-------------|
+| 0.1.x          | 2.x              | \> 8.0      |
+| 1.x            | 3.x              | \> 8.1      |
+| 2.x            | 4.x              | \> 8.1      |
 
 Install via Composer.
 
@@ -38,24 +39,27 @@ composer require pxlrbt/filament-activity-log
 > **Warning**
 > This plugin only offers a page to show activities related to your model. You need [`spatie/laravel-activitylog`](https://github.com/spatie/laravel-activitylog) installed and configured for it to work. It is important you are using the `LogsActivity` trait as per [Spatie's docs](https://spatie.be/docs/laravel-activitylog/v4/advanced-usage/logging-model-events) for this work as we use the '->activities()' method of the trait.
 
+## Filament v4 Upgrade
+Make sure you have a custom theme, add this line and recompile: `@import '../../../../vendor/pxlrbt/filament-activity-log/resources/css/styles.css';`
+
 ## Usage
 
 Make sure you use a **custom theme** and the vendor folder for this plugins is published, so that it includes the Tailwind CSS classes.
 
 ### Create a page
 
-Create the page inside your resources `Pages/` directory. Replace `UserResource` with your resource. 
+Create the page inside your resources `Pages/` directory. Replace `OrderResource` with your resource. 
 
 ```php
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Resources\OrderResource\Pages;
 
 use pxlrbt\FilamentActivityLog\Pages\ListActivities;
 
-class ListUserActivities extends ListActivities
+class ListOrderActivities extends ListActivities
 {
-    protected static string $resource = UserResource::class;
+    protected static string $resource = OrderResource::class;
 }
 ```
 
@@ -67,10 +71,10 @@ Add the page to your resource's `getPages()` method.
 public static function getPages(): array
 {
     return [
-        'index' => Pages\ListUsers::route('/'),
-        'create' => Pages\CreateUser::route('/create'),
-        'activities' => Pages\ListUserActivities::route('/{record}/activities'),
-        'edit' => Pages\EditUser::route('/{record}/edit'),
+        'index' => Pages\ListOrders::route('/'),
+        'create' => Pages\CreateOrder::route('/create'),
+        'activities' => Pages\ListOrderActivities::route('/{record}/activities'),
+        'edit' => Pages\EditOrder::route('/{record}/edit'),
     ];
 }
 ```

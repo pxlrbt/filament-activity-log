@@ -6,29 +6,33 @@ use Exception;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
-use Filament\Tables\Concerns\CanPaginateRecords;
+use Filament\Schemas\Schema;
+use Filament\Tables\Enums\PaginationMode;
 use Illuminate\Support\Collection;
-use Livewire\Features\SupportPagination\HandlesPagination;
+use Livewire\WithPagination;
+use pxlrbt\FilamentActivityLog\Pages\Concerns\CanPaginate;
 
 abstract class ListActivities extends Page implements HasForms
 {
-    use CanPaginateRecords;
-    use HandlesPagination;
+    use CanPaginate;
+    use WithPagination {
+        WithPagination::resetPage as resetLivewirePage;
+    }
     use InteractsWithFormActions;
     use InteractsWithRecord;
 
-    protected static string $view = 'filament-activity-log::pages.list-activities';
+    protected string $view = 'filament-activity-log::pages.list-activities';
 
     protected static Collection $fieldLabelMap;
 
     public function mount($record)
     {
         $this->record = $this->resolveRecord($record);
+        $this->recordsPerPage = $this->getDefaultRecordsPerPageSelectOption();
     }
 
     public function getBreadcrumb(): string
@@ -43,9 +47,14 @@ abstract class ListActivities extends Page implements HasForms
 
     public function getActivities()
     {
-        return $this->paginateTableQuery(
+        return $this->paginateQuery(
             $this->record->activities()->with('causer')->latest()->getQuery()
         );
+    }
+
+    public function getPaginationMode(): PaginationMode
+    {
+        return PaginationMode::Default;
     }
 
     public function getFieldLabel(string $name): string
@@ -57,9 +66,9 @@ abstract class ListActivities extends Page implements HasForms
 
     protected function createFieldLabelMap(): Collection
     {
-        $form = static::getResource()::form(new Form($this));
+        $schema = static::getResource()::form(new Schema($this));
 
-        $components = collect($form->getComponents());
+        $components = collect($schema->getComponents());
         $extracted = collect();
 
         while (($component = $components->shift()) !== null) {
@@ -127,20 +136,5 @@ abstract class ListActivities extends Page implements HasForms
                 ->danger()
                 ->send();
         }
-    }
-
-    protected function getIdentifiedTableQueryStringPropertyNameFor(string $property): string
-    {
-        return $property;
-    }
-
-    protected function getDefaultTableRecordsPerPageSelectOption(): int
-    {
-        return 10;
-    }
-
-    protected function getTableRecordsPerPageSelectOptions(): array
-    {
-        return [10, 25, 50];
     }
 }
