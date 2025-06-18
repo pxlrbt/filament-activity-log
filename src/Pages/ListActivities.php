@@ -114,10 +114,7 @@ abstract class ListActivities extends Page implements HasForms
         $oldProperties = data_get($activity, 'properties.old');
 
         if ($oldProperties === null) {
-            Notification::make()
-                ->title(__('filament-activity-log::activities.events.restore_failed'))
-                ->danger()
-                ->send();
+            $this->sendRestoreFailureNotification();
 
             return;
         }
@@ -125,16 +122,26 @@ abstract class ListActivities extends Page implements HasForms
         try {
             $this->record->update($oldProperties);
 
-            Notification::make()
-                ->title(__('filament-activity-log::activities.events.restore_successful'))
-                ->success()
-                ->send();
+            $this->sendRestoreSuccessNotification();
         } catch (Exception $e) {
-            Notification::make()
-                ->title(__('filament-activity-log::activities.events.restore_failed'))
-                ->body($e->getMessage())
-                ->danger()
-                ->send();
+            $this->sendRestoreFailureNotification($e->getMessage());
         }
+    }
+
+    protected function sendRestoreSuccessNotification(): Notification
+    {
+        return Notification::make()
+            ->title(__('filament-activity-log::activities.events.restore_successful'))
+            ->success()
+            ->send();
+    }
+
+    protected function sendRestoreFailureNotification(?string $message = null): Notification
+    {
+        return Notification::make()
+            ->title(__('filament-activity-log::activities.events.restore_failed'))
+            ->body($message)
+            ->danger()
+            ->send();
     }
 }
