@@ -89,6 +89,17 @@ $table->actions([
 ]);
 ```
 
+### Adjust your model to log activities
+
+```php
+class Order extends Model
+{
+    use LogsActivity;
+}
+```
+
+See https://spatie.be/docs/laravel-activitylog/v4/advanced-usage/logging-model-events for more information on the topic.
+
 ## Contributing
 
 If you want to contribute to this packages, you may want to test it in a real Filament project:
