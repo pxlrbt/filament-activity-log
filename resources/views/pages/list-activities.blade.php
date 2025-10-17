@@ -20,7 +20,7 @@
                             @if ($activityItem->causer)
                                 <x-filament-panels::avatar.user :user="$activityItem->causer" class="!w-7 !h-7"/>
                             @endif
-                            <div class="flex flex-col text-left">
+                            <div class="flex flex-col text-start">
                                 <span class="font-bold">{{ $activityItem->causer?->name }}</span>
                                 <span class="text-xs text-gray-500">
                                     {{ __('filament-activity-log::activities.events.' . $activityItem->event) }} {{ $activityItem->created_at->format(__('filament-activity-log::activities.default_datetime_format')) }}
