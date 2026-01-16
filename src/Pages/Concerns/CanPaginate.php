@@ -15,7 +15,7 @@ trait CanPaginate
      */
     public $recordsPerPage = null;
 
-    protected int | string | null $defaultRecordsPerPageSelectOption = null;
+    protected int|string|null $defaultRecordsPerPageSelectOption = null;
 
     public function updatedRecordsPerPage(): void
     {
@@ -26,7 +26,7 @@ trait CanPaginate
         $this->resetLivewirePage();
     }
 
-    protected function paginateQuery(Builder $query): Paginator | CursorPaginator
+    protected function paginateQuery(Builder $query): Paginator|CursorPaginator
     {
         $perPage = $this->getRecordsPerPage();
 
@@ -58,7 +58,7 @@ trait CanPaginate
         return $records->onEachSide(0);
     }
 
-    public function getRecordsPerPage(): int | string | null
+    public function getRecordsPerPage(): int|string|null
     {
         return $this->recordsPerPage;
     }
@@ -68,7 +68,7 @@ trait CanPaginate
         return $this->getPage($this->getPaginationPageName());
     }
 
-    public function getDefaultRecordsPerPageSelectOption(): int | string
+    public function getDefaultRecordsPerPageSelectOption(): int|string
     {
         $option = session()->get(
             $this->getPerPageSessionKey(),

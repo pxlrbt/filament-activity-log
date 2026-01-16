@@ -20,9 +20,9 @@ abstract class ListActivities extends Page implements HasForms
 {
     use CanPaginate;
     use CanPaginate;
-    use WithPagination;
     use InteractsWithFormActions;
     use InteractsWithRecord;
+    use WithPagination;
 
     protected string $view = 'filament-activity-log::pages.list-activities';
 
