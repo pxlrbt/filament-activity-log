@@ -26,7 +26,7 @@ This package adds a page to the Filament Admin panel to view the activity log ge
 |----------------|------------------|-------------|
 | 0.1.x          | 2.x              | \> 8.0      |
 | 1.x            | 3.x              | \> 8.1      |
-| 2.x            | 4.x              | \> 8.1      |
+| 2.x            | 4.x,  5.x        | \> 8.1      |
 
 Install via Composer.
 
