@@ -19,9 +19,8 @@ use pxlrbt\FilamentActivityLog\Pages\Concerns\CanPaginate;
 abstract class ListActivities extends Page implements HasForms
 {
     use CanPaginate;
-    use WithPagination {
-        WithPagination::resetPage as resetLivewirePage;
-    }
+    use CanPaginate;
+    use WithPagination;
     use InteractsWithFormActions;
     use InteractsWithRecord;
 
