@@ -23,7 +23,7 @@ trait CanPaginate
             $this->getPerPageSessionKey() => $this->getRecordsPerPage(),
         ]);
 
-        $this->resetLivewirePage();
+        $this->resetPage();
     }
 
     protected function paginateQuery(Builder $query): Paginator|CursorPaginator
