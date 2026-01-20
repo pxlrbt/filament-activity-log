@@ -19,7 +19,6 @@ use pxlrbt\FilamentActivityLog\Pages\Concerns\CanPaginate;
 abstract class ListActivities extends Page implements HasForms
 {
     use CanPaginate;
-    use CanPaginate;
     use InteractsWithFormActions;
     use InteractsWithRecord;
     use WithPagination;
