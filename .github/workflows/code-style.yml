@@ -19,7 +19,7 @@ jobs:
           php-version: '8.4'
 
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref }}
 
@@ -30,7 +30,7 @@ jobs:
         run: ./vendor/bin/pint
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Apply style changes
           file_pattern: '*.php'
