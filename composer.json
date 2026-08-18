@@ -31,7 +31,7 @@
         }
     },
     "require-dev": {
-        "laravel/pint": "^1.5"
+        "laravel/pint": "^1.30"
     },
     "scripts": {
         "pint": "vendor/bin/pint"
